@@ -29,8 +29,9 @@ public class MemberController {
     @PostMapping("/register")
     public CommonResp<Long> register(MemberRegisterReq req) {
         long register = memberService.register(req);
-        CommonResp<Long> commonResp = new CommonResp<>();
+       /* CommonResp<Long> commonResp = new CommonResp<>();
         commonResp.setContent(register);
-        return commonResp;
+        return commonResp;*/
+        return new CommonResp<>(register);
     }
 }
