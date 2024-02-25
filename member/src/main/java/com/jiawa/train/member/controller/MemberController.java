@@ -1,8 +1,10 @@
 package com.jiawa.train.member.controller;
 
 import com.jiawa.common.resp.CommonResp;
+import com.jiawa.train.member.req.MemberLoginReq;
 import com.jiawa.train.member.req.MemberRegisterReq;
 import com.jiawa.train.member.req.MemberSendCodeReq;
+import com.jiawa.train.member.resp.MemberLoginResp;
 import com.jiawa.train.member.service.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +46,14 @@ public class MemberController {
         commonResp.setContent(register);
         return commonResp;*/
         return new CommonResp<>();
+    }
+
+    @PostMapping("/login")
+    public CommonResp<MemberLoginResp> login(@Valid MemberLoginReq req) {
+        MemberLoginResp resp = memberService.login(req);
+       /* CommonResp<Long> commonResp = new CommonResp<>();
+        commonResp.setContent(register);
+        return commonResp;*/
+        return new CommonResp<>(resp);
     }
 }
