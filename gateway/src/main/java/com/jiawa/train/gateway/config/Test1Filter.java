@@ -1,3 +1,4 @@
+/*
 package com.jiawa.train.gateway.config;
 
 
@@ -20,3 +21,4 @@ public class Test1Filter implements GlobalFilter {
         return chain.filter(exchange);
     }
 }
+*/
