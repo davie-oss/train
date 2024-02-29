@@ -1,4 +1,4 @@
-package com.jiawa.common.util;
+package com.jiawa.train.common.util;
 
 import cn.hutool.core.util.IdUtil;
 

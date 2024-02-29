@@ -1,4 +1,4 @@
-package com.jiawa.common.aspect;
+package com.jiawa.train.common.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
