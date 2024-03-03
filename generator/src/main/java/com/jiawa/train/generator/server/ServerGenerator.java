@@ -1,5 +1,6 @@
 package com.jiawa.train.generator.server;
 
+import com.jiawa.train.generator.util.DbUtil;
 import com.jiawa.train.generator.util.Field;
 import com.jiawa.train.generator.util.FreemarkerUtil;
 import freemarker.template.TemplateException;
@@ -45,6 +46,16 @@ public class ServerGenerator {
         Node domainObjectName = table.selectSingleNode("@domainObjectName");
         System.out.println(tableName.getText() + "/" + domainObjectName.getText());
 
+        // 为DbUtil设置数据源
+        Node connectionURL = document.selectSingleNode("//@connectionURL");
+        Node userId = document.selectSingleNode("//@userId");
+        Node password = document.selectSingleNode("//@password");
+        System.out.println("url: " + connectionURL.getText());
+        System.out.println("user: " + userId.getText());
+        System.out.println("password: " + password.getText());
+        DbUtil.url = connectionURL.getText();
+        DbUtil.user = userId.getText();
+        DbUtil.password = password.getText();
 
 
         // 示例：表名 jiawa_test
@@ -55,6 +66,10 @@ public class ServerGenerator {
         // do_main = jiawa-test
         String do_main = tableName.getText().replaceAll("_", "-");
 
+        // 表中文名
+        String tableNameCn = DbUtil.getTableComment(tableName.getText());
+        List<Field> fieldList = DbUtil.getColumnByTableName(tableName.getText());
+        Set<String> typeSet = getJavaTypes(fieldList);
 
         Map<String, Object> param = new HashMap<>();
         param.put("module", module);
@@ -63,7 +78,9 @@ public class ServerGenerator {
         param.put("do_main", do_main);
         System.out.println("组装参数：" + param);
 
-        gen(Domain, param, "controller", "controller");
+
+
+//        gen(Domain, param, "controller", "controller");
 
 
     }
