@@ -2,12 +2,14 @@ package com.jiawa.train.generator.server;
 
 import com.jiawa.train.generator.util.Field;
 import com.jiawa.train.generator.util.FreemarkerUtil;
+import freemarker.template.TemplateException;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class ServerGenerator {
@@ -61,9 +63,8 @@ public class ServerGenerator {
         param.put("do_main", do_main);
         System.out.println("组装参数：" + param);
 
+        gen(Domain, param, "controller", "controller");
 
-        FreemarkerUtil.initConfig("service.ftl");
-        FreemarkerUtil.generator(serverPath+Domain+"Service.java",param);
 
     }
 
@@ -77,7 +78,15 @@ public class ServerGenerator {
         System.out.println(node.getText());
         return node.getText();
     }
-
+    private static void gen(String Domain, Map<String, Object> param, String packageName, String target) throws IOException, TemplateException {
+        FreemarkerUtil.initConfig(target + ".ftl");
+        String toPath = serverPath + packageName + "/";
+        new File(toPath).mkdirs();
+        String Target = target.substring(0, 1).toUpperCase() + target.substring(1);
+        String fileName = toPath + Domain + Target + ".java";
+        System.out.println("开始生成：" + fileName);
+        FreemarkerUtil.generator(fileName, param);
+    }
     private static Set<String> getJavaTypes(List<Field> fieldList) {
         Set<String> set = new HashSet<>();
         for (int i = 0; i < fieldList.size(); i++) {
