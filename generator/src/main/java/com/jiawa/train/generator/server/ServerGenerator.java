@@ -81,6 +81,7 @@ public class ServerGenerator {
         param.put("do_main", do_main);
         param.put("tableNameCn", tableNameCn);
         param.put("fieldList", fieldList);
+        param.put("readOnly", readOnly);
         param.put("typeSet", typeSet);
 
         System.out.println("组装参数：" + param);
@@ -91,7 +92,7 @@ public class ServerGenerator {
         gen(Domain, param, "req", "saveReq");
 //        gen(Domain, param, "req", "queryReq");
 //        gen(Domain, param, "resp", "queryResp");
-
+        genVue(do_main, param);
 
 
     }
@@ -105,6 +106,14 @@ public class ServerGenerator {
         Node node = document.selectSingleNode("//pom:configurationFile");
         System.out.println(node.getText());
         return node.getText();
+    }
+
+    private static void genVue(String do_main, Map<String, Object> param) throws IOException, TemplateException {
+        FreemarkerUtil.initConfig("vue.ftl");
+        new File(vuePath + module).mkdirs();
+        String fileName = vuePath + module + "/" + do_main + ".vue";
+        System.out.println("开始生成：" + fileName);
+        FreemarkerUtil.generator(fileName, param);
     }
     private static void gen(String Domain, Map<String, Object> param, String packageName, String target) throws IOException, TemplateException {
         FreemarkerUtil.initConfig(target + ".ftl");
