@@ -15,8 +15,11 @@ import java.util.*;
 
 public class ServerGenerator {
 
-    static String serverPath = "[module]/src/main/java/com/jiawa/train/[module]/service/";
+    static boolean readOnly = false;
+    static String vuePath = "admin/src/views/main/";
+    static String serverPath = "[module]/src/main/java/com/jiawa/train/[module]/";
     static String pomPath = "generator/pom.xml";
+    static String module = "";
 
     static {
         new File(serverPath).mkdirs();
@@ -76,11 +79,19 @@ public class ServerGenerator {
         param.put("Domain", Domain);
         param.put("domain", domain);
         param.put("do_main", do_main);
+        param.put("tableNameCn", tableNameCn);
+        param.put("fieldList", fieldList);
+        param.put("typeSet", typeSet);
+
         System.out.println("组装参数：" + param);
 
 
+//        gen(Domain, param, "service", "service");
+//        gen(Domain, param, "controller/admin", "adminController");
+        gen(Domain, param, "req", "saveReq");
+//        gen(Domain, param, "req", "queryReq");
+//        gen(Domain, param, "resp", "queryResp");
 
-//        gen(Domain, param, "controller", "controller");
 
 
     }
@@ -104,6 +115,10 @@ public class ServerGenerator {
         System.out.println("开始生成：" + fileName);
         FreemarkerUtil.generator(fileName, param);
     }
+
+    /**
+     * 获取所有的Java类型，使用Set去重
+     */
     private static Set<String> getJavaTypes(List<Field> fieldList) {
         Set<String> set = new HashSet<>();
         for (int i = 0; i < fieldList.size(); i++) {
@@ -112,4 +127,5 @@ public class ServerGenerator {
         }
         return set;
     }
+
 }
