@@ -21,7 +21,12 @@
       </a-menu-item>
       <a-menu-item key="/station">
         <router-link to="/station">
-          <MenuUnfoldOutlined /> &nbsp; 车站管理
+          <MenuUnfoldOutlined /> &nbsp;&nbsp; 车站管理
+        </router-link>
+      </a-menu-item>
+      <a-menu-item key="/train">
+        <router-link to="/train">
+          <MenuUnfoldOutlined /> &nbsp;&nbsp; 车次管理
         </router-link>
       </a-menu-item>
     </a-menu>
