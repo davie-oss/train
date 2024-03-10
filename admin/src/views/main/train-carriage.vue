@@ -47,15 +47,15 @@
           </a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item label="座位数">
-        <a-input v-model:value="trainCarriage.seatCount" />
-      </a-form-item>
+<!--      <a-form-item label="座位数">-->
+<!--        <a-input v-model:value="trainCarriage.seatCount" />-->
+<!--      </a-form-item>-->
       <a-form-item label="排数">
         <a-input v-model:value="trainCarriage.rowCount" />
       </a-form-item>
-      <a-form-item label="列数">
-        <a-input v-model:value="trainCarriage.colCount" />
-      </a-form-item>
+<!--      <a-form-item label="列数">-->
+<!--        <a-input v-model:value="trainCarriage.colCount" />-->
+<!--      </a-form-item>-->
     </a-form>
   </a-modal>
 </template>
@@ -180,7 +180,7 @@ export default defineComponent({
       axios.get("/business/admin/train-carriage/query-list", {
         params: {
           page: param.page,
-          size: param.size
+          size: param.size,
         }
       }).then((response) => {
         loading.value = false;
