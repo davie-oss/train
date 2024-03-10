@@ -61,10 +61,11 @@ import {notification} from "ant-design-vue";
 import axios from "axios";
 import {pinyin} from "pinyin-pro";
 import TrainSelectView from "@/components/train-select.vue";
+import StationSelectView from "@/components/station-select.vue";
 
 export default defineComponent({
   name: "train-station-view",
-  components: {TrainSelectView},
+  components: {StationSelectView, TrainSelectView},
   setup() {
     const visible = ref(false);
     let trainStation = ref({
