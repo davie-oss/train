@@ -10,31 +10,52 @@
           <coffee-outlined /> &nbsp; 欢迎
         </router-link>
       </a-menu-item>
-      <a-menu-item key="/station">
-        <router-link to="/station">
-          <MenuUnfoldOutlined /> &nbsp; 车站管理
-        </router-link>
-      </a-menu-item>
-      <a-menu-item key="/train">
-        <router-link to="/train">
-          <MenuUnfoldOutlined /> &nbsp;&nbsp; 车次管理
-        </router-link>
-      </a-menu-item>
-      <a-menu-item key="/train-station">
-        <router-link to="/train-station">
-          <MenuUnfoldOutlined /> &nbsp;&nbsp; 火车车站
-        </router-link>
-      </a-menu-item>
-      <a-menu-item key="/train-carriage">
-        <router-link to="/train-carriage">
-          <MenuUnfoldOutlined /> &nbsp;&nbsp; 火车车厢
-        </router-link>
-      </a-menu-item>
-      <a-menu-item key="/train-seat">
-        <router-link to="/train-seat">
-          <MenuUnfoldOutlined /> &nbsp;&nbsp; 座位管理
-        </router-link>
-      </a-menu-item>
+      <a-sub-menu key="base">
+        <template #title>
+          <span>
+            <UnorderedListOutlined />
+            基础数据
+          </span>
+        </template>
+        <a-menu-item key="/base/station">
+          <router-link to="/base/station">
+            <MenuUnfoldOutlined /> &nbsp; 车站管理
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="/base/train">
+          <router-link to="/base/train">
+            <MenuUnfoldOutlined /> &nbsp; 火车管理
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="/base/train-station">
+          <router-link to="/base/train-station">
+            <MenuUnfoldOutlined /> &nbsp; 火车车站
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="/base/train-carriage">
+          <router-link to="/base/train-carriage">
+            <MenuUnfoldOutlined /> &nbsp; 火车车厢
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="/base/train-seat">
+          <router-link to="/base/train-seat">
+            <MenuUnfoldOutlined /> &nbsp; 火车座位
+          </router-link>
+        </a-menu-item>
+      </a-sub-menu>
+      <a-sub-menu key="batch">
+        <template #title>
+          <span>
+            <UnorderedListOutlined />
+            跑批管理
+          </span>
+        </template>
+        <a-menu-item key="/batch/job">
+          <router-link to="/batch/job">
+            <MenuUnfoldOutlined /> &nbsp; 任务管理
+          </router-link>
+        </a-menu-item>
+      </a-sub-menu>
     </a-menu>
   </a-layout-sider>
 </template>
