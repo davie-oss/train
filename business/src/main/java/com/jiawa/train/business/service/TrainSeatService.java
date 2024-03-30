@@ -80,54 +80,56 @@ public class TrainSeatService {
     }
 
 
-
     @Transactional
-    public void genTrainSeat(String trainCode){
-
-        DateTime now=new DateTime();
-        //清空当前车次的所有座位记录
+    public void genTrainSeat(String trainCode) {
+        DateTime now = DateTime.now();
+        // 清空当前车次下的所有的座位记录
         TrainSeatExample trainSeatExample = new TrainSeatExample();
         TrainSeatExample.Criteria criteria = trainSeatExample.createCriteria();
         criteria.andTrainCodeEqualTo(trainCode);
         trainSeatMapper.deleteByExample(trainSeatExample);
-        //查询当前车次下的所有车厢
 
+        // 查找当前车次下的所有的车厢
         List<TrainCarriage> carriageList = trainCarriageService.selectByTrainCode(trainCode);
+        LOG.info("当前车次下的车厢数：{}", carriageList.size());
 
-
-        //循环生成每个车厢的座位
-
-        for(TrainCarriage trainCarriage :carriageList){
-
-            //拿到车厢数据：行数，座位类型（得到列数）
+        // 循环生成每个车厢的座位
+        for (TrainCarriage trainCarriage : carriageList) {
+            // 拿到车厢数据：行数、座位类型(得到列数)
             Integer rowCount = trainCarriage.getRowCount();
             String seatType = trainCarriage.getSeatType();
+            int seatIndex = 1;
 
-            int  seatIndex=1;
-
-            //根据车厢的座位类型筛选出所有的列
+            // 根据车厢的座位类型，筛选出所有的列，比如车箱类型是一等座，则筛选出columnList={ACDF}
             List<SeatColEnum> colEnumList = SeatColEnum.getColsByType(seatType);
-            //循环行数
+            LOG.info("根据车厢的座位类型，筛选出所有的列：{}", colEnumList);
 
-            for (int row = 0; row <rowCount ; row++) {
-                //循环列数
-                for (SeatColEnum SeatColEnum :colEnumList) {
+            // 循环行数
+            for (int row = 1; row <= rowCount; row++) {
+                // 循环列数
+                for (SeatColEnum seatColEnum : colEnumList) {
+                    // 构造座位数据并保存数据库
                     TrainSeat trainSeat = new TrainSeat();
                     trainSeat.setId(SnowUtil.getSnowflakeNextId());
                     trainSeat.setTrainCode(trainCode);
                     trainSeat.setCarriageIndex(trainCarriage.getIndex());
-                    trainSeat.setRow(StrUtil.fillBefore(String.valueOf(row),'0',2));
-                    trainSeat.setCol(SeatColEnum.getCode());
+                    trainSeat.setRow(StrUtil.fillBefore(String.valueOf(row), '0', 2));
+                    trainSeat.setCol(seatColEnum.getCode());
                     trainSeat.setSeatType(seatType);
                     trainSeat.setCarriageSeatIndex(seatIndex++);
                     trainSeat.setCreateTime(now);
                     trainSeat.setUpdateTime(now);
-
-                    //构造座位数据，保存数据库
                     trainSeatMapper.insert(trainSeat);
-
                 }
             }
         }
+    }
+
+    public List<TrainSeat> selectByTrainCode(String trainCode) {
+        TrainSeatExample trainSeatExample = new TrainSeatExample();
+        trainSeatExample.setOrderByClause("`id` asc");
+        TrainSeatExample.Criteria criteria = trainSeatExample.createCriteria();
+        criteria.andTrainCodeEqualTo(trainCode);
+        return trainSeatMapper.selectByExample(trainSeatExample);
     }
 }
