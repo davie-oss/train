@@ -21,8 +21,8 @@ public class DailyTrainJob implements Job {
 
     private static final Logger LOG = LoggerFactory.getLogger(DailyTrainJob.class);
 
-//    @Resource
-//    BusinessFeign businessFeign;
+    @Resource
+    BusinessFeign businessFeign;
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -32,7 +32,7 @@ public class DailyTrainJob implements Job {
         Date date = new Date();
         DateTime dateTime = DateUtil.offsetDay(date, 15);
         Date offsetDate = dateTime.toJdkDate();
-//        CommonResp<Object> commonResp = businessFeign.genDaily(offsetDate);
-//        LOG.info("生成15天后的车次数据结束，结果：{}", commonResp);
+        CommonResp<Object> commonResp = businessFeign.genDaily(offsetDate);
+        LOG.info("生成15天后的车次数据结束，结果：{}", commonResp);
     }
 }

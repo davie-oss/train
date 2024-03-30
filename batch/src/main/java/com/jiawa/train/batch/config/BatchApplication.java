@@ -11,8 +11,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 
+
 @ComponentScan("com.jiawa")
-@MapperScan("com/jiawa/train/batch/mapper")
+@MapperScan("com.jiawa.train.*.mapper")
 @EnableFeignClients("com.jiawa.train.batch.feign")
 @SpringBootApplication
 public class BatchApplication {
